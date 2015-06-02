@@ -1,0 +1,72 @@
+#!/bin/bash
+# Please install curl and xclip before running this script!
+
+
+HASTE_URL="http://hastebin.com/"
+HASTE_UPLOAD_URL=$HASTE_URL'documents/'
+
+raw=false
+noclip=false
+
+function help() {
+	echo ""
+	echo "	-r, --raw"
+	echo "	prints the raw link"
+	echo "" 
+	echo "	-n, --noclip"
+	echo "	prevents this script from overriding your latest clipboard"
+	echo ""
+	exit
+}
+
+function haste() {
+	contents=$(cat $1)
+	
+	# TODO: check if file exists?
+	
+	echo $(curl -X POST -s -d "$contents" $HASTE_UPLOAD_URL)
+}
+
+function makeUrl() {
+	code=$(echo "$1" | awk -F '"' '{print $4}')
+	
+	if [ $2 = true ]
+	then
+		url=$HASTE_URL'raw/'$code
+	else
+		url=$HASTE_URL$code
+	fi
+	
+	echo $url
+}
+
+until [ -z $1 ]
+do
+	case $1 in	
+			-h | --help 	)
+				help
+				;;
+			
+			-r | --raw 	)
+				raw=true
+				;;
+				
+			-n | --noclip 	)
+				noclip=true
+				;;
+
+			* 		)
+				result=$(haste $1)
+				url=$(makeUrl $result $raw)
+				
+				echo $url
+				
+				if [ $noclip = false ]
+				then
+					echo "Copying to clipboard..."
+					echo "$url" | xclip -sel clip
+				fi
+				;;
+		esac
+	shift
+done
