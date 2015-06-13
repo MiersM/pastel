@@ -11,14 +11,17 @@ noclip=false
 browser=false
 
 function help() {
-	echo ""
-	echo "	-r, --raw"
-	echo "	prints the raw link"
-	echo "" 
-	echo "	-n, --noclip"
-	echo "	prevents this script from overriding your latest clipboard"
-	echo ""
-	exit
+        echo ""
+        echo "  -r, --raw"
+        echo "  prints the raw link"
+        echo "" 
+        echo "  -n, --noclip"
+        echo "  prevents this script from overriding your latest clipboard"
+        echo ""
+        echo "  -b, --browser"
+        echo "  opens the links in your default browser"
+        echo ""
+        exit
 }
 
 function haste() {
