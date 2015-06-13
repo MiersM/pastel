@@ -57,9 +57,9 @@ do
 				noclip=true
 				;;
 
-            -b | --browser  )
-                browser=true
-                ;;
+                        -b | --browser  )
+                                browser=true
+                                ;;
                 
 			*        		)
 				result=$(haste $1)
@@ -73,11 +73,11 @@ do
 					echo "$url" | xclip -sel clip
 				fi
 
-                if [ $browser = true ]
-                then
-                    $(xdg-open $url)
-                    echo "Opening in browser..."
-                fi
+                                if [ $browser = true ]
+                                then
+                                        $(xdg-open $url)
+                                        echo "Opening in browser..."
+                                fi
 				;;
 		esac
 	shift
