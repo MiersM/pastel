@@ -1,5 +1,6 @@
 #!/bin/bash
-# Please install curl and xclip before running this script!
+# Please install the following before running this script:
+# curl, xclip and xdg-open
 
 
 HASTE_URL="http://hastebin.com/"
@@ -7,6 +8,7 @@ HASTE_UPLOAD_URL=$HASTE_URL'documents/'
 
 raw=false
 noclip=false
+browser=false
 
 function help() {
 	echo ""
@@ -47,18 +49,22 @@ do
 				help
 				;;
 			
-			-r | --raw 	)
+			-r | --raw 	    )
 				raw=true
 				;;
 				
-			-n | --noclip 	)
+			-n | --noclip   )
 				noclip=true
 				;;
 
-			* 		)
+            -b | --browser  )
+                browser=true
+                ;;
+                
+			*        		)
 				result=$(haste $1)
 				url=$(makeUrl $result $raw)
-				
+
 				echo $url
 				
 				if [ $noclip = false ]
@@ -66,7 +72,14 @@ do
 					echo "Copying to clipboard..."
 					echo "$url" | xclip -sel clip
 				fi
+
+                if [ $browser = true ]
+                then
+                    $(xdg-open $url)
+                    echo "Opening in browser..."
+                fi
 				;;
 		esac
 	shift
 done
+
