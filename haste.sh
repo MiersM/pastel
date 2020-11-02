@@ -3,11 +3,11 @@
 # curl, xclip and xdg-open
 
 
-HASTE_URL="http://hastebin.com/"
+HASTE_URL="https://hastebin.com/"
 HASTE_UPLOAD_URL=$HASTE_URL'documents/'
 
 raw=false
-noclip=false
+noclip=true
 browser=false
 
 function help() {
@@ -57,7 +57,7 @@ do
 				;;
 				
 			-n | --noclip   )
-				noclip=true
+				noclip=false
 				;;
 
                         -b | --browser  )
